@@ -96,6 +96,11 @@
                 "name": "vue-template.ts",
                 "relativePath": "vue-template.ts",
                 "test": false
+            },
+            {
+                "relativePath": "vueIndex.ts",
+                "test": false,
+                "name": "vueIndex.ts"
             }
         ],
         "mainFile": "vue-template.ts",
@@ -103,5 +108,5 @@
         "origin": "IMPORTED",
         "originallySharedDir": "components/template/vue"
     },
-    "version": "14.7.4"
+    "version": "14.7.6"
 }

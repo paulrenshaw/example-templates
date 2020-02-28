@@ -4,7 +4,7 @@ import {
 } from '@bit/bit.javascript.default-generator.canonize';
 import { CodeGenerator } from '@bit/bit.javascript.raw.code-generator';
 
-export const mainFile = 'index.vue';
+export const mainFile = 'Index.vue';
 
 export function makeTemplate({ npmId }: { npmId: string }) {
 	const code = generateVueDefaultCode({ npmId });
@@ -23,24 +23,27 @@ export default function generateVueDefaultCode({ npmId }: { npmId: string }): st
 	const moduleName = toCanonicalClassName(npmId);
 	const moduleId = canonizeNpmId(npmId);
 
-	return [
-		generateVueTemplate({ moduleName }),
-		'',
-		'<script>',
-		generateVueModule({ moduleName, moduleId })
-			.split('\n')
-			.map(x => `	${x}`)
-			.join('\n'),
-		'</script>',
-		'',
-		generateVueStyle(),
-	].join('\n');
+	const vueTemplate = generateVueTemplate({ moduleName })
+	const vueModule = generateVueModule({ moduleName, moduleId })
+		.split('\n')
+		.map(x => `	${x}`)
+		.join('\n')
+	const vueStyle = generateVueStyle()
+
+	return `${vueTemplate}
+		
+	<script>
+	${vueModule}
+	</script>
+	
+	${vueStyle}
+	`
 }
 
 function generateVueTemplate({ moduleName }: { moduleName: string }): string {
 	return `<template>
-	<${moduleName}/>
-</template>`;
+		<${moduleName}/>
+	</template>`
 }
 
 function generateVueModule({
@@ -50,24 +53,29 @@ function generateVueModule({
 	moduleId: string;
 	moduleName: string;
 }): string {
+	const imports = [
+		{ defaultName: moduleName, moduleId: moduleId },
+	]
+
+	const defaultExport = `{
+		data () {
+			return {
+				var1: 'World'
+			}
+		},
+		components: {
+			${moduleName}
+		}
+	}`
+
 	return codeGenerator.generateModule({
-		imports: [
-			{ defaultName: 'Vue', moduleId: 'vue' },
-			{ defaultName: moduleName, moduleId: moduleId },
-		],
-		defaultExport: [
-			`{`,
-			'	data: () => ({',
-			'		var1: "world"',
-			'	}),',
-			'	components: {',
-			`		${moduleName},`,
-			'	}',
-			'}',
-		].join('\n'),
+		imports,
+		defaultExport
 	});
 }
 
 function generateVueStyle() {
-	return ['<style scoped>', '', '</style>'].join('\n');
+	return `<style scoped>
+	
+	</style>`
 }
