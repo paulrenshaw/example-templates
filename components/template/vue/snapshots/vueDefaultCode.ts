@@ -1,10 +1,10 @@
-export default `<template>
-  <CodeGenerator/>
+const snapshot = `<template>
+  <CodeGenerator />
 </template>
 
 <script>
   import CodeGenerator from '@bit/bit.javascript.raw.code-generator';
-
+  
   export default (
     {
       data () {
@@ -21,5 +21,6 @@ export default `<template>
 
 <style scoped>
 
-</style>
-`
+</style>`
+
+export default snapshot.replace(/  /g, '\t')

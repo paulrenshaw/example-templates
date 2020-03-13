@@ -88,6 +88,11 @@
     "bit.javascript/template/vue@2.0.5": {
         "files": [
             {
+                "relativePath": "snapshots/vueDefaultCode.ts",
+                "test": false,
+                "name": "vueDefaultCode.ts"
+            },
+            {
                 "name": "vue-template.spec.ts",
                 "relativePath": "vue-template.spec.ts",
                 "test": true
@@ -96,11 +101,6 @@
                 "name": "vue-template.ts",
                 "relativePath": "vue-template.ts",
                 "test": false
-            },
-            {
-                "relativePath": "vueIndex.ts",
-                "test": false,
-                "name": "vueIndex.ts"
             }
         ],
         "mainFile": "vue-template.ts",

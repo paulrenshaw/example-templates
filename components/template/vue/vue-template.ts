@@ -4,7 +4,7 @@ import {
 } from '@bit/bit.javascript.default-generator.canonize';
 import { CodeGenerator } from '@bit/bit.javascript.raw.code-generator';
 
-export const mainFile = 'Index.vue';
+export const mainFile = 'index.vue';
 
 export function makeTemplate({ npmId }: { npmId: string }) {
 	const code = generateVueDefaultCode({ npmId });
@@ -30,20 +30,23 @@ export default function generateVueDefaultCode({ npmId }: { npmId: string }): st
 		.join('\n')
 	const vueStyle = generateVueStyle()
 
-	return `${vueTemplate}
-		
-	<script>
-	${vueModule}
-	</script>
-	
-	${vueStyle}
-	`
+	return [
+		`${vueTemplate}`,
+		``,
+		`<script>`,
+		`${vueModule}`,
+		`</script>`,
+		``,
+		`${vueStyle}`
+	].join('\n')
 }
 
 function generateVueTemplate({ moduleName }: { moduleName: string }): string {
-	return `<template>
-		<${moduleName}/>
-	</template>`
+	return [
+		`<template>`,
+		`	<${moduleName} />`,
+		`</template>`,
+	].join('\n')
 }
 
 function generateVueModule({
@@ -57,16 +60,18 @@ function generateVueModule({
 		{ defaultName: moduleName, moduleId: moduleId },
 	]
 
-	const defaultExport = `{
-		data () {
-			return {
-				var1: 'World'
-			}
-		},
-		components: {
-			${moduleName}
-		}
-	}`
+	const defaultExport = [
+		`{`,
+		`	data () {`,
+		`		return {`,
+		`			var1: 'World'`,
+		`		}`,
+		`	},`,
+		`	components: {`,
+		`		${moduleName}`,
+		`	}`,
+		`}`
+	].join('\n')
 
 	return codeGenerator.generateModule({
 		imports,
@@ -75,7 +80,9 @@ function generateVueModule({
 }
 
 function generateVueStyle() {
-	return `<style scoped>
-	
-	</style>`
+	return [
+		`<style scoped>`,
+		``,
+		`</style>`
+	].join('\n')
 }
